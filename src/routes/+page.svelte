@@ -19,11 +19,13 @@
   function addDog(dog: Dog) {
     const newDogMap = new Map(dogMap);
     dogMap.set(dog.id, dog);
+    dogMap = dogMap; // triggers reactivity
   }
 
   function deleteDog(id: string) {
     const newDogMap = new Map(dogMap);
     dogMap.delete(id);
+    dogMap = dogMap; // triggers reactivity
   }
 
   async function handleDelete(event: MouseEvent) {
