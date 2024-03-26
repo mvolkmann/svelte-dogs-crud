@@ -1,19 +1,17 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+  import {onMount} from 'svelte';
 
   type Dog = {id: string; name: string; breed: string};
 
   let selectedDog: Dog | undefined = undefined;
+  // let selectedDog = $state<Dog | undefined>(undefined);
 
   let dogMap = new Map<string, Dog>();
+  // let dogMap = $state<Map<string, Dog>>(new Map<string, Dog>());
 
   onMount(async () => {
-    const res = await fetch('/dogs');
-    const dogArray = await res.json();
-    for (const dog of dogArray) {
-      dogMap.set(dog.id, dog);
-    }
-    dogMap = dogMap; // triggers reactivity
+    // $effect(() => {
+    loadDogs();
   });
 
   function addDog(dog: Dog) {
@@ -75,6 +73,15 @@
       console.error('POST failed:', error);
     }
   }
+
+  async function loadDogs() {
+    const res = await fetch('/dogs');
+    const dogArray = await res.json();
+    for (const dog of dogArray) {
+      dogMap.set(dog.id, dog);
+    }
+    dogMap = dogMap; // triggers reactivity
+  }
 </script>
 
 <main>
@@ -128,8 +135,8 @@
               ✕
             </button>
             <!-- This selects the dog
-                     which triggers a selection-change event,
-                     which causes the form to update. -->
+                 which triggers a selection-change event,
+                 which causes the form to update. -->
             <button class="show-on-hover" on:click={handleEdit} type="button">
               ✎
             </button>
