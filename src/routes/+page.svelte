@@ -173,7 +173,7 @@
   }
 
   h1 {
-    color: orange;
+    color: black;
   }
 
   input {
